@@ -5,7 +5,7 @@ function addTask() {
   const taskName = input.value.trim();
 
   if (taskName !== "") {
-    tasks.push({ name: taskName, status: "todo" }); // aggiunto status
+    tasks.push({ name: taskName, status: "todo" });
     input.value = "";
     renderTasks();
   }
@@ -13,17 +13,20 @@ function addTask() {
 
 function renderTasks() {
   const list = document.getElementById("taskList");
+  const filter = document.getElementById("statusFilter").value;
   list.innerHTML = "";
 
   tasks.forEach((task, index) => {
-    const li = document.createElement("li");
-    li.innerHTML = `
-      <strong>${task.name}</strong> [${task.status}]
-      <button onclick="changeStatus(${index})">Cambia Stato</button>
-      <button onclick="editTask(${index})">Modifica</button>
-      <button onclick="deleteTask(${index})">Elimina</button>
-    `;
-    list.appendChild(li);
+    if (filter === "all" || task.status === filter) {
+      const li = document.createElement("li");
+      li.innerHTML = `
+        <strong>${task.name}</strong> [${task.status}]
+        <button onclick="changeStatus(${index})">Cambia Stato</button>
+        <button onclick="editTask(${index})">Modifica</button>
+        <button onclick="deleteTask(${index})">Elimina</button>
+      `;
+      list.appendChild(li);
+    }
   });
 }
 

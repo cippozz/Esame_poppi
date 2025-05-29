@@ -1,14 +1,26 @@
 <!DOCTYPE html>
 <html lang="it">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta charset="UTF-8">
   <title>Task Manager</title>
 </head>
 <body>
   <h1>Task Manager</h1>
-  <input type="text" id="taskInput" placeholder="Nuova attività" />
+
+  <input type="text" id="taskInput" placeholder="Nuova attività">
   <button onclick="addTask()">Aggiungi</button>
+
+  <br><br>
+
+  <!-- Filtro per stato -->
+  <label for="statusFilter">Filtra per stato:</label>
+  <select id="statusFilter" onchange="renderTasks()">
+    <option value="all">Tutti</option>
+    <option value="todo">Da fare</option>
+    <option value="inprogress">In corso</option>
+    <option value="done">Completati</option>
+  </select>
+
   <ul id="taskList"></ul>
 
   <script src="script.js"></script>
