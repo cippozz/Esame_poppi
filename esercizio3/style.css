@@ -1,14 +1,135 @@
 body {
-  font-family: Arial, sans-serif;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: linear-gradient(135deg, #a1c4fd, #c2e9fb);
+  color: #333;
   text-align: center;
-  margin-top: 50px;
-  background-color: #eef;
+  padding: 2rem;
+  margin: 0;
+}
+
+h1 {
+  margin-bottom: 1.5rem;
+  font-weight: 700;
+  color: #1e3c72;
+  text-shadow: 1px 1px 4px rgba(0,0,0,0.1);
+}
+
+.choice-container {
+  margin-bottom: 1.5rem;
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+  font-size: 1.1rem;
+}
+
+label {
+  cursor: pointer;
+  user-select: none;
+  color: #1e3c72;
+  font-weight: 600;
+  transition: color 0.3s;
+}
+label:hover {
+  color: #4a90e2;
+}
+input[type="radio"] {
+  margin-right: 0.5rem;
+  cursor: pointer;
+}
+
+#manualInput {
+  margin-bottom: 2rem;
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+}
+#manualInput input[type="number"] {
+  padding: 0.5rem 0.8rem;
+  border-radius: 8px;
+  border: 1px solid #4a90e2;
+  width: 140px;
+  font-size: 1rem;
+  transition: box-shadow 0.3s;
+}
+#manualInput input[type="number"]:focus {
+  outline: none;
+  box-shadow: 0 0 6px #4a90e2;
+  border-color: #357abd;
+}
+#manualInput button {
+  padding: 0.55rem 1.3rem;
+  border: none;
+  border-radius: 8px;
+  background: #4a90e2;
+  color: white;
+  font-weight: 600;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+#manualInput button:hover {
+  background: #357abd;
 }
 
 #meteo {
-  background: white;
-  padding: 20px;
-  display: inline-block;
-  border-radius: 10px;
-  box-shadow: 0 0 10px #ccc;
+  background-color: rgba(255, 255, 255, 0.85);
+  max-width: 320px;
+  margin: 0 auto 3rem auto;
+  border-radius: 15px;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+  padding: 1.8rem 2rem;
+}
+
+#icona {
+  font-size: 5rem;
+  margin-bottom: 1rem;
+  user-select: none;
+}
+
+#meteo p {
+  font-size: 1.2rem;
+  margin: 0.3rem 0;
+  font-weight: 600;
+  color: #333;
+}
+#meteo span {
+  font-weight: 700;
+  color: #1e3c72;
+}
+
+.legend {
+  max-width: 340px;
+  margin: 0 auto;
+  background: #ffffffcc;
+  border-radius: 12px;
+  padding: 1rem 1.5rem;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  font-size: 0.9rem;
+  color: #555;
+  user-select: none;
+}
+.legend h2 {
+  margin-top: 0;
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #1e3c72;
+}
+
+.legend ul {
+  list-style: none;
+  padding: 0;
+  margin: 0.5rem 0 0 0;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1rem 2rem;
+}
+.legend li {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+.legend li span.icon {
+  font-size: 1.6rem;
+  user-select: none;
 }

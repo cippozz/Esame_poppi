@@ -1,44 +1,69 @@
+function toggleInput() {
+  const manualInput = document.getElementById("manualInput");
+  const selected = document.querySelector('input[name="posizione"]:checked').value;
+  manualInput.style.display = selected === "manual" ? "flex" : "none";
+
+  if (selected === "current") {
+    getCurrentPositionMeteo();
+  }
+}
+
+function loadManualMeteo() {
+  const lat = parseFloat(document.getElementById("latInput").value);
+  const lon = parseFloat(document.getElementById("lonInput").value);
+
+  if (isNaN(lat) || isNaN(lon)) {
+    alert("Inserisci latitudine e longitudine validi.");
+    return;
+  }
+
+  getMeteo(lat, lon);
+}
+
+function getCurrentPositionMeteo() {
+  if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(
+      (position) => {
+        const lat = position.coords.latitude;
+        const lon = position.coords.longitude;
+        getMeteo(lat, lon);
+      },
+      (error) => {
+        console.error("Errore nella geolocalizzazione:", error);
+        alert("Impossibile ottenere la posizione. Inserisci latitudine e longitudine manualmente.");
+      }
+    );
+  } else {
+    alert("Geolocalizzazione non supportata.");
+  }
+}
+
 function getMeteo(lat, lon) {
-  const apiURL = `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current=temperature_2m,relative_humidity_2m,precipitation,rain,cloud_cover,wind_speed_10m,weather_code`;
+  const apiURL = `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current_weather=true&hourly=temperature_2m,relative_humidity_2m,precipitation,rain,cloud_cover,wind_speed_10m,weather_code`;
 
   fetch(apiURL)
     .then(response => response.json())
     .then(data => {
-      const meteo = data.current;
+      const meteo = data.current_weather;
 
-      // Log di controllo per assicurarti che weather_code arrivi
-      console.log("Weather Code:", meteo.weather_code);
+      if (!meteo) {
+        alert("Dati meteo non disponibili per questa posizione.");
+        return;
+      }
 
-      document.getElementById('temp').textContent = meteo.temperature_2m;
-      document.getElementById('umidita').textContent = meteo.relative_humidity_2m;
-      document.getElementById('nuvole').textContent = meteo.cloud_cover;
-      document.getElementById('vento').textContent = meteo.wind_speed_10m;
-      document.getElementById('pioggia').textContent = meteo.precipitation;
+      document.getElementById('temp').textContent = meteo.temperature ?? '--';
+      document.getElementById('umidita').textContent = data.hourly.relative_humidity_2m ? data.hourly.relative_humidity_2m[0] : '--';
+      document.getElementById('nuvole').textContent = data.hourly.cloud_cover ? data.hourly.cloud_cover[0] : '--';
+      document.getElementById('vento').textContent = meteo.windspeed ?? '--';
+      document.getElementById('pioggia').textContent = data.hourly.precipitation ? data.hourly.precipitation[0] : '--';
 
-      // Mostra icona meteo
-      const icona = getWeatherIcon(meteo.weather_code);
+      const icona = getWeatherIcon(meteo.weathercode ?? meteo.weather_code);
       document.getElementById('icona').textContent = icona;
     })
-    .catch(error => console.error("Errore nel recupero meteo:", error));
-}
-
-
-if (navigator.geolocation) {
-  navigator.geolocation.getCurrentPosition(
-    (position) => {
-      const lat = position.coords.latitude;
-      const lon = position.coords.longitude;
-      getMeteo(lat, lon);
-    },
-    (error) => {
-      console.error("Errore nella geolocalizzazione:", error);
-      // Fallback su Trento
-      getMeteo(46.0679, 11.1211);
-    }
-  );
-} else {
-  console.error("Geolocalizzazione non supportata");
-  getMeteo(46.0679, 11.1211);
+    .catch(error => {
+      console.error("Errore nel recupero meteo:", error);
+      alert("Errore nel recupero dati meteo.");
+    });
 }
 
 function getWeatherIcon(code) {
@@ -54,3 +79,6 @@ function getWeatherIcon(code) {
   return "❓";
 }
 
+window.onload = () => {
+  toggleInput();
+};

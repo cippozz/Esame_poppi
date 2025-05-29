@@ -1,21 +1,47 @@
 <!DOCTYPE html>
 <html lang="it">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
   <title>Meteo App</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
   <h1>Meteo Locale</h1>
-<div id="meteo">
-  <div id="icona">❓</div> <!-- icona meteo -->
-  <p>Temperatura: <span id="temp">--</span> °C</p>
-  <p>Umidità: <span id="umidita">--</span> %</p>
-  <p>Nuvolosità: <span id="nuvole">--</span> %</p>
-  <p>Vento: <span id="vento">--</span> km/h</p>
-  <p>Pioggia: <span id="pioggia">--</span> mm</p>
-</div>
 
+  <div class="choice-container">
+    <label><input type="radio" name="posizione" value="current" checked onchange="toggleInput()" /> Usa posizione attuale</label>
+    <label><input type="radio" name="posizione" value="manual" onchange="toggleInput()" /> Inserisci latitudine e longitudine</label>
+  </div>
+
+  <div id="manualInput" style="display:none;">
+    <input type="number" id="latInput" placeholder="Latitudine" step="any" />
+    <input type="number" id="lonInput" placeholder="Longitudine" step="any" />
+    <button onclick="loadManualMeteo()">Carica meteo</button>
+  </div>
+
+  <div id="meteo">
+    <div id="icona">❓</div>
+    <p>Temperatura: <span id="temp">--</span> °C</p>
+    <p>Umidità: <span id="umidita">--</span> %</p>
+    <p>Nuvolosità: <span id="nuvole">--</span> %</p>
+    <p>Vento: <span id="vento">--</span> km/h</p>
+    <p>Pioggia: <span id="pioggia">--</span> mm</p>
+  </div>
+
+  <div class="legend">
+    <h2>Legenda Icone Meteo</h2>
+    <ul>
+      <li><span class="icon">☀️</span> Sereno</li>
+      <li><span class="icon">🌤️</span> Poco nuvoloso</li>
+      <li><span class="icon">☁️</span> Nuvoloso</li>
+      <li><span class="icon">🌫️</span> Nebbia</li>
+      <li><span class="icon">🌦️</span> Pioggia leggera</li>
+      <li><span class="icon">🌧️</span> Pioggia</li>
+      <li><span class="icon">❄️</span> Neve</li>
+      <li><span class="icon">⛈️</span> Temporale</li>
+      <li><span class="icon">❓</span> Dati non disponibili</li>
+    </ul>
+  </div>
 
   <script src="meteo.js"></script>
 </body>
