@@ -6,16 +6,22 @@ function getMeteo(lat, lon) {
     .then(data => {
       const meteo = data.current;
 
+      // Log di controllo per assicurarti che weather_code arrivi
+      console.log("Weather Code:", meteo.weather_code);
+
       document.getElementById('temp').textContent = meteo.temperature_2m;
       document.getElementById('umidita').textContent = meteo.relative_humidity_2m;
       document.getElementById('nuvole').textContent = meteo.cloud_cover;
       document.getElementById('vento').textContent = meteo.wind_speed_10m;
       document.getElementById('pioggia').textContent = meteo.precipitation;
+
+      // Mostra icona meteo
+      const icona = getWeatherIcon(meteo.weather_code);
+      document.getElementById('icona').textContent = icona;
     })
-    .catch(err => {
-      console.error("Errore nel recupero dei dati meteo:", err);
-    });
+    .catch(error => console.error("Errore nel recupero meteo:", error));
 }
+
 
 if (navigator.geolocation) {
   navigator.geolocation.getCurrentPosition(
