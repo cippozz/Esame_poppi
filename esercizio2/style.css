@@ -12,3 +12,12 @@ button {
   padding: 10px 20px;
   margin: 5px;
 }
+#giri-list {
+  list-style-type: none;
+  padding: 0;
+  margin-top: 20px;
+}
+#giri-list li {
+  font-size: 20px;
+  margin: 4px 0;
+}

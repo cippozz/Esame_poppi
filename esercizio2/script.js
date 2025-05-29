@@ -1,29 +1,33 @@
 let timer;
-let seconds = 0;
+let milliseconds = 0;
 let running = false;
 
 const display = document.getElementById('display');
 const startBtn = document.getElementById('start');
 const stopBtn = document.getElementById('stop');
 const resetBtn = document.getElementById('reset');
+const giroBtn = document.getElementById('giro');
+const giriList = document.getElementById('giri-list');
 
-function formatTime(sec) {
-  let m = Math.floor(sec / 60);
-  let s = sec % 60;
-  return (m < 10 ? '0' + m : m) + ':' + (s < 10 ? '0' + s : s);
+function formatTime(ms) {
+  let totalSeconds = Math.floor(ms / 100);
+  let m = Math.floor(totalSeconds / 60);
+  let s = totalSeconds % 60;
+  let cs = ms % 100;
+  return `${m.toString().padStart(2, '0')}:${s.toString().padStart(2, '0')}:${cs.toString().padStart(2, '0')}`;
 }
 
 function updateDisplay() {
-  display.textContent = formatTime(seconds);
+  display.textContent = formatTime(milliseconds);
 }
 
 function startTimer() {
   if (running) return;
   running = true;
   timer = setInterval(() => {
-    seconds++;
+    milliseconds++;
     updateDisplay();
-  }, 1000);
+  }, 10); // ogni 10ms → centesimi di secondo
 }
 
 function stopTimer() {
@@ -33,12 +37,20 @@ function stopTimer() {
 
 function resetTimer() {
   stopTimer();
-  seconds = 0;
+  milliseconds = 0;
   updateDisplay();
+  giriList.innerHTML = "";
+}
+
+function salvaGiro() {
+  const li = document.createElement('li');
+  li.textContent = formatTime(milliseconds);
+  giriList.appendChild(li);
 }
 
 startBtn.addEventListener('click', startTimer);
 stopBtn.addEventListener('click', stopTimer);
 resetBtn.addEventListener('click', resetTimer);
+giroBtn.addEventListener('click', salvaGiro);
 
 updateDisplay();
