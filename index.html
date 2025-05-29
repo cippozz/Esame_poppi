@@ -1,16 +1,16 @@
 <!DOCTYPE html>
 <html lang="it">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
   <title>Task Manager</title>
 </head>
 <body>
   <h1>Task Manager</h1>
 
-  <input type="text" id="taskInput" placeholder="Nuova attività">
+  <input type="text" id="taskInput" placeholder="Nuova attività" />
   <button onclick="addTask()">Aggiungi</button>
 
-  <br><br>
+  <br /><br />
 
   <!-- Filtro per stato -->
   <label for="statusFilter">Filtra per stato:</label>
@@ -20,6 +20,16 @@
     <option value="inprogress">In corso</option>
     <option value="done">Completati</option>
   </select>
+
+  <br /><br />
+
+  <!-- Campo ricerca -->
+  <input
+    type="text"
+    id="searchInput"
+    placeholder="Cerca attività..."
+    oninput="renderTasks()"
+  />
 
   <ul id="taskList"></ul>
 

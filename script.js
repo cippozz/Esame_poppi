@@ -14,10 +14,15 @@ function addTask() {
 function renderTasks() {
   const list = document.getElementById("taskList");
   const filter = document.getElementById("statusFilter").value;
+  const searchTerm = document.getElementById("searchInput").value.toLowerCase();
+
   list.innerHTML = "";
 
   tasks.forEach((task, index) => {
-    if (filter === "all" || task.status === filter) {
+    if (
+      (filter === "all" || task.status === filter) &&
+      task.name.toLowerCase().includes(searchTerm)
+    ) {
       const li = document.createElement("li");
       li.innerHTML = `
         <strong>${task.name}</strong> [${task.status}]
