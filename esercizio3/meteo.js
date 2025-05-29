@@ -1,16 +1,36 @@
-const apiURL = "https://api.open-meteo.com/v1/forecast?latitude=46.0679&longitude=11.1211&current=temperature_2m,relative_humidity_2m,precipitation,rain,cloud_cover,wind_speed_10m,weather_code";
+function getMeteo(lat, lon) {
+  const apiURL = `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current=temperature_2m,relative_humidity_2m,precipitation,rain,cloud_cover,wind_speed_10m,weather_code`;
 
-fetch(apiURL)
-  .then(response => response.json())
-  .then(data => {
-    const meteo = data.current;
+  fetch(apiURL)
+    .then(response => response.json())
+    .then(data => {
+      const meteo = data.current;
 
-    document.getElementById('temp').textContent = meteo.temperature_2m;
-    document.getElementById('umidita').textContent = meteo.relative_humidity_2m;
-    document.getElementById('nuvole').textContent = meteo.cloud_cover;
-    document.getElementById('vento').textContent = meteo.wind_speed_10m;
-    document.getElementById('pioggia').textContent = meteo.precipitation;
-  })
-  .catch(err => {
-    console.error("Errore nel recupero dei dati meteo:", err);
-  });
+      document.getElementById('temp').textContent = meteo.temperature_2m;
+      document.getElementById('umidita').textContent = meteo.relative_humidity_2m;
+      document.getElementById('nuvole').textContent = meteo.cloud_cover;
+      document.getElementById('vento').textContent = meteo.wind_speed_10m;
+      document.getElementById('pioggia').textContent = meteo.precipitation;
+    })
+    .catch(err => {
+      console.error("Errore nel recupero dei dati meteo:", err);
+    });
+}
+
+if (navigator.geolocation) {
+  navigator.geolocation.getCurrentPosition(
+    (position) => {
+      const lat = position.coords.latitude;
+      const lon = position.coords.longitude;
+      getMeteo(lat, lon);
+    },
+    (error) => {
+      console.error("Errore nella geolocalizzazione:", error);
+      // Fallback su Trento
+      getMeteo(46.0679, 11.1211);
+    }
+  );
+} else {
+  console.error("Geolocalizzazione non supportata");
+  getMeteo(46.0679, 11.1211);
+}
