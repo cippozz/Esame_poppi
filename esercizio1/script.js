@@ -5,7 +5,7 @@ function addTask() {
   const taskName = input.value.trim();
 
   if (taskName !== "") {
-    tasks.push({ name: taskName, status: "todo" });
+    tasks.push({ name: taskName, status: "Da fare" });
     input.value = "";
     renderTasks();
   }
@@ -16,20 +16,31 @@ function renderTasks() {
   const filter = document.getElementById("statusFilter").value;
   const searchTerm = document.getElementById("searchInput").value.toLowerCase();
 
+  // Mappa per tradurre filtro da inglese a italiano
+  const statusFilterMap = {
+    all: null,
+    todo: "Da fare",
+    doing: "In corso",
+    done: "Completato",
+  };
+
   list.innerHTML = "";
 
   tasks.forEach((task, index) => {
     if (
-      (filter === "all" || task.status === filter) &&
+      (filter === "all" || task.status === statusFilterMap[filter]) &&
       task.name.toLowerCase().includes(searchTerm)
     ) {
       const li = document.createElement("li");
+
       li.innerHTML = `
-        <strong>${task.name}</strong> [${task.status}]
+        <strong>${task.name}</strong>
+        <span class="status ${task.status.replace(' ', '-').toLowerCase()}">[${task.status}]</span>
         <button onclick="changeStatus(${index})">Cambia Stato</button>
         <button onclick="editTask(${index})">Modifica</button>
         <button onclick="deleteTask(${index})">Elimina</button>
       `;
+
       list.appendChild(li);
     }
   });
@@ -49,10 +60,18 @@ function editTask(index) {
 }
 
 function changeStatus(index) {
-  const statusOrder = ["todo", "inprogress", "done"];
+  const statusOrder = ["Da fare", "In corso", "Completato"];
   const currentStatus = tasks[index].status;
   const currentIndex = statusOrder.indexOf(currentStatus);
   const nextIndex = (currentIndex + 1) % statusOrder.length;
   tasks[index].status = statusOrder[nextIndex];
+  renderTasks();
+}
+
+function filterTasks() {
+  renderTasks();
+}
+
+function searchTasks() {
   renderTasks();
 }

@@ -1,38 +1,34 @@
 <!DOCTYPE html>
 <html lang="it">
 <head>
-  <meta charset="UTF-8" />
-  <link rel="stylesheet" href="style.css" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Task Manager</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <h1>Task Manager</h1>
+  <div class="container">
+    <h1>📝 Task Manager</h1>
 
-  <input type="text" id="taskInput" placeholder="Nuova attività" />
-  <button onclick="addTask()">Aggiungi</button>
+    <div class="task-form">
+      <input type="text" id="taskInput" placeholder="Aggiungi una nuova attività..." />
+      <button onclick="addTask()">Aggiungi</button>
+    </div>
 
-  <br /><br />
+    <div class="task-filters">
+      <select id="statusFilter" onchange="filterTasks()">
+         <option value="all">Tutti</option>
+         <option value="todo">Da fare</option>
+         <option value="doing">In corso</option>
+         <option value="done">Completato</option>
+</select>
 
-  <!-- Filtro per stato -->
-  <label for="statusFilter">Filtra per stato:</label>
-  <select id="statusFilter" onchange="renderTasks()">
-    <option value="all">Tutti</option>
-    <option value="todo">Da fare</option>
-    <option value="inprogress">In corso</option>
-    <option value="done">Completati</option>
-  </select>
 
-  <br /><br />
+      <input type="text" id="searchInput" oninput="searchTasks()" placeholder="Cerca attività..." />
+    </div>
 
-  <!-- Campo ricerca -->
-  <input
-    type="text"
-    id="searchInput"
-    placeholder="Cerca attività..."
-    oninput="renderTasks()"
-  />
-
-  <ul id="taskList"></ul>
+    <ul id="taskList" class="task-list"></ul>
+  </div>
 
   <script src="script.js"></script>
 </body>
