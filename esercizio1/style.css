@@ -116,3 +116,16 @@ h1 {
   background-color: #ff9800;
   color: white;
 }
+
+/* Colori di sfondo per ogni stato */
+li.da-fare {
+  background-color: #f8d7da;
+}
+
+li.in-corso {
+  background-color: #fff3cd;
+}
+
+li.completato {
+  background-color: #d4edda; /* verde chiaro */
+}

@@ -32,6 +32,8 @@ function renderTasks() {
       task.name.toLowerCase().includes(searchTerm)
     ) {
       const li = document.createElement("li");
+      li.classList.add(task.status.replace(" ", "-").toLowerCase());
+
 
       li.innerHTML = `
         <strong>${task.name}</strong>
